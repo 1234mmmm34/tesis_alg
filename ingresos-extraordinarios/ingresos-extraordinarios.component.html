@@ -1,0 +1,71 @@
+<body *ngIf="tipo_formulario=='extraordinario'">
+  <div class="contenedor" style="height: 650px;">
+
+    <div class="form">
+      <!-- Formulario para agregar un nuevo ingreso extraordinario -->
+      <form id="formCrear" class="Formulario">
+
+        <h2 class="titulo">Ingresos Extraordinarios</h2>
+
+
+        <p>
+          <select id="usuarioExtra" name="usuarioExtra" required ngModel (change)="onChangeUsuario($event)">
+            <option value="" hidden selected>-- Selecciona un usuario --</option>
+            <option *ngFor="let usuario of personas">
+              {{usuario.id_persona}}- {{usuario.nombre}} {{usuario.apellido_pat}} {{usuario.apellido_mat}}
+            </option>
+          </select>
+        </p>
+
+
+        <p>
+          <select id="deudaExtra" name="deudaExtra" required ngModel (change)="onChangeDeuda($event)">
+            <option value="" hidden selected>-- Selecciona una deuda --</option>
+            <option *ngFor="let deuda of deudasDelUsuario">
+              {{deuda.nombre_deuda}}
+            </option>
+          </select>
+        </p>
+
+        <p>
+          <input type="text" #montoDeudaExtra id="montoDeudaExtra" name="montoDeudaExtra" formControlName="montoDeudaExtra" value="" placeholder="Agrega un monto para el ingreso" [(ngModel)]="monto">
+        </p>
+
+        <p>
+          <select id="comprobante" name="comprobante">
+            <option value="" hidden selected>-- Selecciona un método de pago --</option>
+            <option value="efectivo">Pago en Efectivo</option>
+            <option value="spei">Comprobante SPEI</option>
+            <option value="ticket">Ticket Bancario</option>
+          </select>
+        </p>
+
+        <p>
+          <input type="text" id="fechaCorteExtra" name="fechaCorteExtra" placeholder="fecha de corte"
+            value="fechaCorteExtra" disabled [(ngModel)]="fecha_corte">
+        </p>
+
+        <p>
+          <input type="file" (change)="handleInputFile($event)" accept="image/*" id="fileInput" style="display: none;">
+          <button class="boton-verde" onclick="document.getElementById('fileInput').click()">Cargar
+            Comprobante</button>
+        </p>
+<!--btn_imagen-->
+        <p>
+          <button class="boton-verde" (click)="pagarDeudaExtraordinaria(montoDeudaExtra.value)">Pagar</button>
+        </p>
+      </form>
+ 
+      <div class="imagen-cont">
+
+      </div>
+      <div>
+        <div class="imagen">
+          <img style="margin-left: 5%;" [src]="imagenSeleccionada" alt="Imagen seleccionada" *ngIf="imagenSeleccionada"
+            width="270" height="270">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
