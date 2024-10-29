@@ -50,6 +50,7 @@
             <th>Recargo aplicado</th>
             <th>Estado</th>
             <th>Fecha</th>
+            <th>Comprobante</th>
             <th style="text-align:center;width:200px;">
               Borrar
             </th>
@@ -71,6 +72,13 @@
               {{ hist.estado }}
             </td>
             <td>{{hist.dia_registro}}</td>
+            <td>
+              <a href="{{hist.comprobante}}" style="text-decoration: none;" target="_blank">
+              <button type="button" id="view-button">
+                <mat-icon style="font-size:large; font-weight: bolder;text-decoration: none;">file_open</mat-icon>
+              </button>
+              </a>
+            </td>
             <td>
 
               <button type="button" id="view-button">
@@ -192,10 +200,11 @@
             </p>
 
             <p>
-              <input type="file" (change)="handleInputFile($event)" accept="image/*" id="fileInput"
-                style="display: none;">
-              <button class="boton-verde" onclick="document.getElementById('fileInput').click()">Cargar
-                Comprobante</button>
+              <input type="file" (change)="handleInputFile($event)" accept=".pdf" id="fileInput" style="display: none;">
+              <button class="boton-verde" onclick="document.getElementById('fileInput').click()">Cargar Comprobante</button>
+            </p>
+            <p>
+              <span *ngIf="archivoSeleccionado">{{ archivoSeleccionado?.name }}</span> <!-- Solo el nombre del archivo -->
             </p>
             <!--btn_imagen-->
             <p>
@@ -203,19 +212,7 @@
             </p>
           </form>
 
-          
-          <div class="imagen-cont">
-
-
-            <div>
-              <div class="imagen">
-                <img style="margin-left: 5%;" [src]="imagenSeleccionada" alt="Imagen seleccionada"
-                  *ngIf="imagenSeleccionada" width="270" height="270">
-              </div>
-
-            </div>
-
-          </div>
+        
 
         </div>
 

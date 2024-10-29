@@ -80,7 +80,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { EditarCuentaComponent } from './editar-cuenta/editar-cuenta.component';
 //import { HomeUsuariosComponent } from './grupos/home-usuarios/home-usuarios.component';
 
-
+import { importProvidersFrom } from '@angular/core';
+import {provideStorage, getStorage} from '@angular/fire/storage'
+import { provideFirebaseApp, initializeApp} from '@angular/fire/app';
 
 
 
@@ -167,7 +169,17 @@ import { EditarCuentaComponent } from './editar-cuenta/editar-cuenta.component';
     MatFormFieldModule
 
   ],
-  providers: [NotificationService],
+  providers: [NotificationService,provideFirebaseApp(() =>
+    initializeApp({
+      apiKey: "AIzaSyBCmcRcQ5wmzurPq-rmA3vYJAZv2-Q6qbk",
+      authDomain: "student-17254.firebaseapp.com",
+      projectId: "student-17254",
+      storageBucket: "student-17254.appspot.com",
+      messagingSenderId: "581858745710",
+      appId: "1:581858745710:web:afda81f14ca7861eae757f"
+    })
+  ),
+  provideStorage(() => getStorage())],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -82,5 +82,6 @@ export interface deudores {
                 recargo: any,
                 estado: any,
                 monto_restante: any,
-                dia_registro: any
+                dia_registro: any,
+                comprobante: any
                 };
