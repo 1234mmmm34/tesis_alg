@@ -75,6 +75,28 @@ export class FraccionamientosComponent {
   }
 
   
+  async Actualizar_Estado(): Promise<boolean> {
+    const url = `https://localhost:44397/Hikvision/Actualizar_Estado?id_controlador=${this.controlador.id_controlador}&id_fraccionamiento=${this.dataService.obtener_usuario(3)}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        Swal.fire({
+          title: 'Controlador actualizado',
+          text: '',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        this.fetchDataHikvision(this.dataService.obtener_usuario(3))
+        return response.ok; // Devuelve true si la respuesta es exitosa
+    } catch {
+        return false; // Devuelve false en caso de error
+    }
+}
 
 
   cambiarColorBoton(): void {
@@ -189,11 +211,12 @@ export class FraccionamientosComponent {
 
       //  this.mostrarGrid = true;
       this.loadingService.hide()
+      this.controladores = controladores;
 
+      this.controladores[0].nombre += " (habilitado)";
 
 
       console.log(controladores);
-      this.controladores = controladores;
     });
   }
 
