@@ -145,6 +145,15 @@ export class DataService {
     return this.http.get<deudas[]>('https://localhost:44397/api/Deudas/Consultar_DeudaExtra?id_tesorero='+id_tesorero);
   }
 */
+
+actualizarHikvision( f: any): Observable<fraccionamientos[]> {
+
+
+  const url = "https://localhost:44397/Hikvision/Actualizar_Hikvision?id_controlador="+f.id_controlador+"&nombre="+f.nombre+"&user="+f.user+"&password="+f.password+"&port="+f.port+"&ip="+f.oct1+"."+f.oct2+"."+f.oct3+"."+f.oct4;
+  return this.http.put<fraccionamientos[]>(url,{});
+
+}
+
 fetchDataDeudasExtra(id_tesorero: any, tipo_deuda: any): Observable<deudas[]> {
   return this.http.get<deudas[]>('https://localhost:44397/api/Deudas/Consultar_Deuda?id_tesorero=' + id_tesorero + "&tipo_deuda=" + tipo_deuda);
 }

@@ -479,6 +479,26 @@ export class IngresosComponent {
   }
 
 
+  async Generar_Recibo(id_deuda: number): Promise<void> {
+    try {
+        const response = await fetch(`https://localhost:44397/api/Deudas/GenerarRecibo?id_deuda=${id_deuda}`);
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `recibo_${id_deuda}.pdf`; // Nombre del archivo
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        }
+    } catch {
+        console.error('Error al generar el recibo.');
+    }
+}
+
+
 
   async pagarDeudaExtraordinaria(montoDeudaExtra: any) {
 

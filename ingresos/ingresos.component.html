@@ -51,6 +51,7 @@
             <th>Estado</th>
             <th>Fecha</th>
             <th>Comprobante</th>
+            <th>Generar recibo</th>
             <th style="text-align:center;width:200px;">
               Borrar
             </th>
@@ -75,6 +76,13 @@
             <td>
               <a href="{{hist.comprobante}}" style="text-decoration: none;" target="_blank">
               <button type="button" id="view-button">
+                <mat-icon style="font-size:large; font-weight: bolder;text-decoration: none;">file_open</mat-icon>
+              </button>
+              </a>
+            </td>
+            <td>
+              <a style="text-decoration: none;" target="_blank">
+              <button type="button" id="view-button" (click)="Generar_Recibo(hist.id)">
                 <mat-icon style="font-size:large; font-weight: bolder;text-decoration: none;">file_open</mat-icon>
               </button>
               </a>

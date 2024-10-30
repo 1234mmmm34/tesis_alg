@@ -18,6 +18,12 @@ export interface controladores {
         password: any;
         port: any;
         ip: any;
+        oct1: any;
+        oct2: any;
+        oct3: any;
+        oct4: any;
+
+
 
         };
         

@@ -69,7 +69,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
 
   ngOnInit(): void {
 
-    this.fetchDataUsers(this.dataService.obtener_usuario(1));
+    this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
 
     $(function () {
@@ -118,7 +118,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
     this.id_usuario = usuario;
 
     this.UserGroup1 = this.fb.group({
-      id_persona: ['', Validators.required],
+      id_persona: [usuario, Validators.required],
       nombre: [nombre, Validators.required],
       apellido_pat: [apellido_pat, Validators.required],
       apellido_mat: [apellido_mat, Validators.required],
@@ -138,10 +138,10 @@ constructor(private http: HttpClient, private dataService: DataService, private 
 
 
     const token = uuidv4();
-    console.log(token, correo_invitado, this.dataService.obtener_usuario(1), this.dataService.obtener_usuario(5), this.dataService.obtener_usuario(2), "usuario")
+    console.log(token, correo_invitado, this.dataService.obtener_usuario(3), this.dataService.obtener_usuario(5), this.dataService.obtener_usuario(2), "usuario")
 
     var correo = correo_invitado;
-    this.invitacionService.generarInvitacion(token, correo_invitado, this.dataService.obtener_usuario(1), this.dataService.obtener_usuario(5), this.dataService.obtener_usuario(2), "usuario")
+    this.invitacionService.generarInvitacion(token, correo_invitado, this.dataService.obtener_usuario(3), this.dataService.obtener_usuario(5), this.dataService.obtener_usuario(2), "usuario")
       .subscribe(
         response => {
           console.log('Success:', response);
@@ -190,8 +190,8 @@ constructor(private http: HttpClient, private dataService: DataService, private 
         fecha_nacimiento: usuario.fecha_nacimiento,
         correo: "N/A",
         contrasenia: "123",
-        id_fraccionamiento: this.dataService.obtener_usuario(1),
-        id_administrador: this.dataService.obtener_usuario(1),
+        id_fraccionamiento: this.dataService.obtener_usuario(3),
+        id_administrador: this.dataService.obtener_usuario(3),
         id_lote: 1,
         hikvision: "permitido"
 
@@ -208,7 +208,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
         .subscribe((res) => {
           console.log(res);
           console.log(this.usuarios[0].fecha_nacimiento);
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
           Swal.fire({
             title: 'Usuario agregado',
@@ -232,7 +232,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
 
     this.id_fracc = this.id_usuario;
 
-    return this.http.get("https://localhost:44397/api/Usuario_lote/RestrictedUser?id_usuario="+this.id_fracc+"&id_fraccionamiento="+this.dataService.obtener_usuario(1)).subscribe(
+    return this.http.get("https://localhost:44397/api/Usuario_lote/RestrictedUser?id_usuario="+this.id_fracc+"&id_fraccionamiento="+this.dataService.obtener_usuario(3)).subscribe(
       () => {
 
         Swal.fire({
@@ -242,7 +242,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           confirmButtonText: 'Aceptar'
         })
         this.UserGroup.reset();
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
       },
       (error) => {
@@ -253,7 +253,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           icon: 'error',
           confirmButtonText: 'Aceptar'
         })
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
         console.log("hola");
         this.UserGroup.reset();
 
@@ -264,14 +264,57 @@ constructor(private http: HttpClient, private dataService: DataService, private 
   }
 
 
-  delete(usuario: any) {
 
+
+
+  delete(usuario: any) {
+    this.id_fracc = this.id_usuario;
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer. El usuario será eliminado completamente del sistema',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete("https://localhost:44397/api/Usuario_lote/Eliminar_inquilino?id_usuario="+this.id_fracc +"&id_fraccionamiento="+this.dataService.obtener_usuario(3)).subscribe(
+          () => {
+            Swal.fire({
+              title: 'Usuario eliminado correctamente',
+              text: '',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            this.UserGroup.reset();
+            this.fetchDataUsers(this.dataService.obtener_usuario(3));
+
+          },
+          (error) => {
+            console.error('Error al eliminar la deuda:', error);
+            Swal.fire({
+              title: 'Error al eliminar el usuario',
+              text: '',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            this.fetchDataUsers(this.dataService.obtener_usuario(3));
+
+          }
+        );
+      }
+    });
+
+
+
+    /*
     this.id_fracc = this.id_usuario;
     console.log(this.id_usuario);
 
-    return this.http.delete("https://localhost:44397/api/Usuario_lote/Eliminar_inquilino?id_usuario="+this.id_fracc+"&id_fraccionamiento="+this.dataService.obtener_usuario(1)).subscribe(
+    return this.http.delete("https://localhost:44397/api/Usuario_lote/Eliminar_inquilino?id_usuario="+this.id_fracc+"&id_fraccionamiento="+this.dataService.obtener_usuario(3)).subscribe(
       () => {
-
+ 
         Swal.fire({
           title: 'Usuario eliminado correctamente',
           text: '',
@@ -279,7 +322,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           confirmButtonText: 'Aceptar'
         })
         this.UserGroup.reset();
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
       },
       (error) => {
@@ -290,13 +333,13 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           icon: 'error',
           confirmButtonText: 'Aceptar'
         })
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
         console.log("hola");
         this.UserGroup.reset();
 
 
       })
-
+*/
 
   }
 
@@ -306,7 +349,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
     this.id_fracc = this.id_usuario;
 
 
-    return this.http.get("https://localhost:44397/api/Usuario_lote/EnableUser?id_usuario=" + this.id_fracc+ "&id_fraccionamiento=" + this.dataService.obtener_usuario(1)).subscribe(
+    return this.http.get("https://localhost:44397/api/Usuario_lote/EnableUser?id_usuario=" + this.id_fracc+ "&id_fraccionamiento=" + this.dataService.obtener_usuario(3)).subscribe(
       () => {
         Swal.fire({
           title: 'Usuario agregado correctamente',
@@ -314,7 +357,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           icon: 'success',
           confirmButtonText: 'Aceptar'
         })
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
       },
       (error) => {
@@ -325,7 +368,7 @@ constructor(private http: HttpClient, private dataService: DataService, private 
           icon: 'error',
           confirmButtonText: 'Aceptar'
         })
-        this.fetchDataUsers(this.dataService.obtener_usuario(1));
+        this.fetchDataUsers(this.dataService.obtener_usuario(3));
         console.log("hola");
         this.UserGroup.reset();
 
@@ -350,7 +393,7 @@ actualizar_tesorero(){
         icon: 'success',
         confirmButtonText: 'Aceptar'
       })
-      this.fetchDataUsers(this.dataService.obtener_usuario(1));
+      this.fetchDataUsers(this.dataService.obtener_usuario(3));
       window.location.reload();
 
     },
@@ -362,7 +405,7 @@ actualizar_tesorero(){
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
-      this.fetchDataUsers(this.dataService.obtener_usuario(1));
+      this.fetchDataUsers(this.dataService.obtener_usuario(3));
       console.log("hola");
       this.UserGroup.reset();
 
@@ -437,11 +480,10 @@ actualizar_usuario(
     })
   };
 
-  console.log("params  ", usuario);
+  console.log("params  ", params);
 
 
-/*
-  return this.http.put("https://localhost:44397/api/Personas/Actualizar_Persona", params).subscribe(
+  return this.http.put("https://localhost:44397/api/Personas/Actualizar_Persona_Admi", params).subscribe(
     (_response) => {
 
       Swal.fire({
@@ -470,7 +512,7 @@ actualizar_usuario(
 
     }
   )
-    */
+    
 }
 
 

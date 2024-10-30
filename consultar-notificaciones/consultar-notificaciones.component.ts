@@ -18,7 +18,7 @@ import { LoadingService } from '../loading-spinner/loading-spinner.service';
 export class ConsultarNotificacionesComponent {
   constructor(private NotificacionesService: NotificacionesService, private dataService: DataService, private loadingService: LoadingService) { }
   personas: Personas[] = [];
-
+ 
   id_fraccionamineto: number = this.dataService.obtener_usuario(1);
   respuestaNotificacion: string | null = null;
   idNotificacion: number | undefined;
@@ -43,7 +43,7 @@ export class ConsultarNotificacionesComponent {
 
   ngOnInit(): void {
 
-    this.consultarNotificacion(this.dataService.obtener_usuario(1), this.indice, this.verdaderoRango, this.id_destinatario);
+    this.consultarNotificacion(this.dataService.obtener_usuario(1), this.id_destinatario);
   }
 
   pageChanged(event: any) {
@@ -87,18 +87,19 @@ export class ConsultarNotificacionesComponent {
 
     const selectedValue = event.target.value;
 
+    
     this.id_destinatario = selectedValue;
     // console.log(this.id_destinatario);
 
-    this.consultarNotificacion(this.dataService.obtener_usuario(1), 0, 100, this.id_destinatario);
+    this.consultarNotificacion(this.dataService.obtener_usuario(1), this.id_destinatario);
   }
 
 
-  consultarNotificacion(idFraccionamiento: any, indice: number, verdaderoRango: number, id_destinatario: number) {
+  consultarNotificacion(idFraccionamiento: any, id_destinatario: number) {
 
     this.loadingService.show()
 
-    this.NotificacionesService.consultarNotificacion(idFraccionamiento, 0, 100, id_destinatario).subscribe((notificaciones: Notificaciones[]) => {
+    this.NotificacionesService.consultarNotificacion(idFraccionamiento, id_destinatario).subscribe((notificaciones: Notificaciones[]) => {
 
      
       
@@ -117,27 +118,13 @@ export class ConsultarNotificacionesComponent {
 
 
   agregarNotificacion(formulario: any): void {
-    //const idFraccionamiento = parseInt(formulario.fraccionamiento);
-    const idFraccionamiento = this.id_fraccionamineto;
-    //console.log(idFraccionamiento);
-    const tipo = formulario.tipo;
-    console.log("tipo" + tipo);
-    let destinatarioId = 0;
 
-    if (tipo == 'individual') { 
-      destinatarioId = parseInt(formulario.destinatario.split(' - ')[0]);
+
+    if (formulario.tipo == 'general') { 
+      formulario.destinatario = 0;
     }
 
-
-    //console.log(destinatarioId);
-    const asunto = formulario.asunto;
-    //console.log(asunto);
-    const mensaje = formulario.mensaje;
-    //console.log(mensaje);
-
-    console.log("holaaaaaaa")
-
-    this.NotificacionesService.agregarNotificacion(idFraccionamiento, tipo, destinatarioId, asunto, mensaje)
+    this.NotificacionesService.agregarNotificacion(this.dataService.obtener_usuario(1), formulario.tipo, formulario.destinatario, formulario.asunto, formulario.mensaje)
       .subscribe(
         (respuesta: string) => {
           this.respuestaNotificacion = respuesta;
@@ -189,6 +176,8 @@ export class ConsultarNotificacionesComponent {
       
       this.mostrarDestinatario = true;
       this.usuarios = usuarios;
+
+      console.log(this.usuarios)
 
     });
 

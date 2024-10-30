@@ -13,18 +13,18 @@
  
   <div class="sidenav">
 
-    <p> <label for="modal" class="boton-agregar" style="font-weight: 900;">+</label> Agregar nuevo controlador</p>
+    <p> <label for="modal" class="boton-agregar" style="font-weight: 900;" (click)="limpiar()">+</label> Agregar nuevo controlador</p>
 
     <div id="sidenav">
       <label>Mis controladores</label>
       <ul  *ngFor="let controlador of controladores">
-        <li id="lista"><a>{{controlador.nombre}}
+        <li id="lista" (click)="edit(controlador)"><a>{{controlador.nombre}}
           <mat-icon id="delete-button" style="font-size:large;" (click)="Eliminar_fraccionamiento(controlador.id_controlador)">delete</mat-icon></a>
         </li>
       </ul>
     </div>
 
-  </div>
+  </div> 
 
 
 
@@ -55,7 +55,7 @@
 
   <div class="modal">
     <div class="modal-header">
-      <h3>Agregar controlador</h3>
+      <h3>Agregar controlador</h3> 
 
       <label for="modal">
         <img
@@ -74,8 +74,10 @@
 
       <form id="formCrear" class="Formulario" #form="ngForm" [formGroup]="UserGroup">
 
+        <input style="display: none;" [(ngModel)]="controlador.id_controlador" formControlName="id_controlador" name="id_controlador">
+
         <select class="modelo-controlador" 
-          style="width: 270px; height: 30px; text-align: center;" formControlName="modelo" name="modelo" [selectedIndex]="0">
+          style="width: 270px; height: 30px; text-align: center;" name="modelo">
           <option value="0" disabled selected>--Selecciona un modelo de controlador--</option>
           <option value="">hikvision ds-k2602</option>
         </select>
@@ -83,7 +85,7 @@
         <a [href]="'mailto:destinatario@example.com?subject='" style="font-size: smaller;" id="enviar_correo">
           El modelo de mi controlador no se encuentra en la lista
         </a>
-
+ 
         <div class="help-container">
 
           <input type="text" formControlName="nombre" name="nombre"
@@ -100,13 +102,13 @@
         -->
 
         <div class="ip">
-          <input type="number" name="oct1" class="octeto" placeholder="127" min="1" max="999" oninput="validity.valid||(value='');">
+          <input type="number" [(ngModel)]="controlador.oct1" formControlName="oct1" name="oct1" class="octeto" placeholder="127" min="1" max="999" oninput="validity.valid||(value='');">
           <label class="punto">.</label>
-          <input type="number" name="oct2" class="octeto" placeholder="0" min="0" max="999" oninput="validity.valid||(value='');">
+          <input type="number" [(ngModel)]="controlador.oct2" formControlName="oct2" name="oct2" class="octeto" placeholder="0" min="0" max="999" oninput="validity.valid||(value='');">
           <label class="punto">.</label>
-          <input type="number" name="oct3" class="octeto" placeholder="0" min="0" max="999" oninput="validity.valid||(value='');">
+          <input type="number" [(ngModel)]="controlador.oct3" formControlName="oct3" name="oct3" class="octeto" placeholder="0" min="0" max="999" oninput="validity.valid||(value='');">
           <label class="punto">.</label>
-          <input type="number" name="oct4" class="octeto" placeholder="1" min="0" max="999" oninput="validity.valid||(value='');">
+          <input type="number" [(ngModel)]="controlador.oct4" formControlName="oct4" name="oct4" class="octeto" placeholder="1" min="0" max="999" oninput="validity.valid||(value='');">
         </div>
 
 
@@ -125,8 +127,12 @@
 
        
 
-        <div class="botones-container">
+        <div class="botones-container" *ngIf="!editar">
           <button class="boton" (click)="Agregar_fraccionamiento(form.value)" onclick="myFunction()">Agregar</button>
+        </div>
+
+        <div class="botones-container" *ngIf="editar">
+          <button class="boton" (click)="actualizarHikvision(form.value)" onclick="myFunction()">Guardar</button>
         </div>
       </form>
     </div>

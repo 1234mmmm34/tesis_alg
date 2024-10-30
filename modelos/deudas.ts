@@ -74,6 +74,7 @@ export interface deudores {
             };
 
             export interface historial {
+                id: any,
                 id_deuda: any,
                 nombre_persona: any,
                 tipo_deuda: any,

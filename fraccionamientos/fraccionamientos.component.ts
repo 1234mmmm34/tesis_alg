@@ -27,6 +27,9 @@ export class FraccionamientosComponent {
   controlador = new controlador();
   fraccionamientos: fraccionamientos[] = [];
   fraccionamiento = new fraccionamiento();
+  octetos: string[] = [];
+
+  editar: boolean = false;
 
   nombreControlador: string = this.dataService.obtener_usuario(10);
   ipControlador: string = this.dataService.obtener_usuario(12);
@@ -45,6 +48,7 @@ export class FraccionamientosComponent {
 
 
     this.UserGroup = this.fb.group({
+      id_controlador: ['', Validators.required],
       modelo: ['', Validators.required],
       nombre: ['', Validators.required],
       user: ['', Validators.required],
@@ -63,8 +67,14 @@ export class FraccionamientosComponent {
   ngOnInit(): void {
     this.fetchDataHikvision(this.dataService.obtener_usuario(1));
     this.cambiarColorBoton();
+    document.addEventListener('DOMContentLoaded', function () {
+      // Aquí puedes inicializar cosas si es necesario
+    });
+
 
   }
+
+  
 
 
   cambiarColorBoton(): void {
@@ -85,21 +95,92 @@ export class FraccionamientosComponent {
   }
 
   edit(controladores: {
-    nombre: any
+    id_controlador: any;
+    nombre: any;
     user: any;
     password: any;
     ip: any;
     port: any;
   }) {
+    this.controlador.id_controlador = controladores.id_controlador;
     this.controlador.nombre = controladores.nombre;
     this.controlador.user = controladores.user;
     this.controlador.password = controladores.password;
-    this.controlador.ip = controladores.ip;
+    
+    if(controladores.port=="null"){
+      controladores.port="0";
+    }
+
     this.controlador.port = controladores.port;
+    this.octetos = (controladores.ip).split('.');
+
+    this.editar = true;
+
+    this.controlador.oct1 = this.octetos[0];
+    this.controlador.oct2 = this.octetos[1];
+    this.controlador.oct3 = this.octetos[2];
+    this.controlador.oct4 = this.octetos[3];
+    console.log(this.controlador.oct1)
+
+    const divElement = document.getElementById('modal') as HTMLInputElement;
+
+    if (divElement !== null ) {
+      divElement.checked = true;
+
+    }
+/*
+    const divElement = document.getElementById('#modal-background');
+    const divElement1 = document.getElementById('#modal');
+      if (divElement !== null && divElement1 !== null) {
+        divElement.style.display = 'block';
+        divElement1.style.display = 'block';
+  
+      }
+*/
 
 
+  } 
+
+  limpiar(){
+    this.UserGroup.reset();
   }
- 
+
+  
+  actualizarHikvision(formValues: any): void {
+
+    console.log(formValues)
+
+    this.dataService.actualizarHikvision(formValues)
+      .subscribe(
+        (res: any) => {
+
+          this.fetchDataHikvision(this.dataService.obtener_usuario(1))
+
+            Swal.fire({
+              title: 'Controlador actualizado',
+              text: '',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            
+
+        },
+        (error) => {
+          console.error('Error en la solicitud:', error);
+          Swal.fire({
+            title: 'Error en la consulta',
+            text: 'Consulte al administrador',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      );
+
+      this.editar = false;
+  }
+
+
+
   fetchDataHikvision(id_administrador: any) {
 
     this.loadingService.show()
@@ -109,7 +190,7 @@ export class FraccionamientosComponent {
       //  this.mostrarGrid = true;
       this.loadingService.hide()
 
-    
+
 
       console.log(controladores);
       this.controladores = controladores;
@@ -120,27 +201,38 @@ export class FraccionamientosComponent {
     nombre: any
     id_controlador: any;
     id_fraccionamiento: any;
+    modelo: any;
     user: any;
     password: any;
     port: any;
+    oct1: any;
+    oct2: any;
+    oct3: any;
+    oct4: any;
     ip: any;
   }) {
 
     console.log(controladores);
-    controladores.id_fraccionamiento = this.dataService.obtener_usuario(1);
+    //controladores.id_fraccionamiento = this.dataService.obtener_usuario(1);
     //console.log("id_usuario: "+this.dataService.obtener_usuario(1));
     const headers = new HttpHeaders({ 'myHeader': 'procademy' });
     this.http.post(
       "https://localhost:44397/Hikvision/Agregar_Hikvision?" +
       "nombre=" + controladores.nombre +
-      "&id_fraccionamiento=" + controladores.id_fraccionamiento +
+      "&id_fraccionamiento=" + this.dataService.obtener_usuario(1) +
       "&user=" + controladores.user +
       "&password=" + controladores.password +
       "&port=" + controladores.port +
-      "&ip=" + controladores.ip,
+      "&ip=" + controladores.oct1 + "." + controladores.oct2 + "." + controladores.oct3 + "." + controladores.oct4,
       { headers: headers })
       .subscribe((res) => {
         console.log(res);
+        Swal.fire(
+          'Controlador agregado',
+          'El controlador ha sido agregado.',
+          'success'
+        );
+
         this.ngOnInit();
       });
 
@@ -151,8 +243,8 @@ export class FraccionamientosComponent {
 
 
 
-  
-  Eliminar_fraccionamiento(id_controlador: any){
+
+  Eliminar_fraccionamiento(id_controlador: any) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: `¿Deseas eliminar el controlador "${this.nombreControlador}"? los cambios no se podrán revertir`,
