@@ -50,7 +50,7 @@ export class IngresosComponent {
   deudasDelUsuarioExtra: Deudores[] = [];
   res: number = 0;
   indice: number = 0;
-  verdaderoRango: number = 6;
+  verdaderoRango: number = 5;
   cont: number = 1;
   registrosTotales: number = 0;
   historial1: historial[] = [];

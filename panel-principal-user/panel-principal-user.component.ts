@@ -42,10 +42,13 @@ export class PanelPrincipalUserComponent {
   fillerNav = [
     {name:"PanelUsuarios", route:"PanelUsuarios", icon:"home"},
     {name:"Notificaciones", route:"Notificaciones_usuarios", icon:"assignment"},
-    {name:"Mis Deudas", route:"MisDeudas", icon:"priority_high"},
+    {name:"Mis deudas", route:"MisDeudas", icon:"priority_high"},
     {name:"Proveedores", route:"Proveedores_usuarios", icon:"explore"},
+    {name:"Acceso a puerta",route:"AccesoPuerta", icon:"dashboard"}
+    /*
     {name:"Acceso a puerta",route:"AccesoPuerta", icon:"dashboard", children: [
       {name:'',route:"", icon:""}]}
+*/
     /*,
     {name:'Acuerdos',route:"Acuerdos_usuarios", icon:"supervised_user_circle", children: [
       {name:'',route:"", icon:""}

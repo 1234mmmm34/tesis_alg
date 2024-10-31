@@ -91,6 +91,8 @@ const routes: Routes = [
       { path: 'ConsultarPropiedades', component: ConsultarPropiedadesComponent },
       { path: 'Inquilinos', component: InquilinosComponent },
       { path: 'Usuarios', component: AgregarUsuarioComponent },
+      { path: 'Invitacion', component: InvitacionComponent },
+
       //{path:"Tesorero", component:TesoreroComponent},
       {
         path: 'Propiedades', component: PropiedadesComponent,
@@ -161,7 +163,16 @@ const routes: Routes = [
       { path: 'AccesoPuerta', component: AccesoPuertaComponent },
       { path: 'Acuerdos_usuarios', component: AcuerdosUsuariosComponent },
       { path: 'Administracion', component: AdministracionComponent },
-      { path: "Settings", component: CuentaComponent },
+   //   { path: "Settings", component: CuentaComponent },
+
+   
+   {
+    path: "Configuracion", component: CuentaComponent,
+    children: [
+      { path: "Grupos", component: GruposComponent },
+      { path: "EditarCuenta", component: EditarCuentaComponent }
+    ]
+  }
 
       // {path:'', component:HomeComponent}
 

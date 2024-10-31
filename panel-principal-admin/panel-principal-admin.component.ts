@@ -45,6 +45,9 @@ export class PanelPrincipalAdminComponent {
     { name: "Notificaciones", route: "Notificaciones", icon: "priority_high" },
     { name: 'Usuarios', route: "Usuarios", icon: "supervised_user_circle" },
     { name: "Controlador", route: "Controlador", icon: "cast_connected" },
+    //{ name: "Contr", route: "Invitacion", icon: "cast_connected" },
+
+
     {
       name: '', route: "", icon: "", children: [
         { name: '', route: "", icon: "" }

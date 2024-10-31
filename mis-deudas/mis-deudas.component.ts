@@ -7,6 +7,7 @@ import { PersonasService } from '../ingresos-extraordinarios/personas.service';
 import {  deudores, deudor } from "../modelos/deudas"
 import { formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
+import { LoadingService } from '../loading-spinner/loading-spinner.service';
 @Component({
   selector: 'app-mis-deudas',
   templateUrl: './mis-deudas.component.html',
@@ -25,12 +26,14 @@ export class MisDeudasComponent {
 
   Deudores_totales:Deudores[]=[];
   Deudores_totales2:Deudores[]=[];
+  mostrarGrid: boolean = false;
+
   ngOnInit(){
     //this.fetchDataDeudores();
-    this.ConsultarDeudores();
+    this.ConsultarDeudores(0);
   }
 
-  constructor(private http: HttpClient, private dataService: DataService, private fb: FormBuilder,private personasService:PersonasService){}
+  constructor(private http: HttpClient, private dataService: DataService, private fb: FormBuilder,private personasService:PersonasService, private loadingService: LoadingService){}
 
   // fetchDataDeudores() {
   //   this.dataService.fetchDataDeudores(this.dataService.obtener_usuario(3)).subscribe((deudores: deudores[]) => {
@@ -74,17 +77,22 @@ export class MisDeudasComponent {
 
     const selectedValue = event.target.value;
 
+    console.log(selectedValue )
     //this.id_destinatario = selectedValue;
     // console.log(this.id_destinatario);
 
-    this.ConsultarDeudores();
+    this.ConsultarDeudores(selectedValue);
   }
 
 
-  ConsultarDeudores(){
+  ConsultarDeudores(tipo_deuda: number){
+    this.loadingService.show();
     console.log("aaaaaaaa: " + this.dataService.obtener_usuario(4))
-    this.personasService.consultarDeudoresUsuarios(this.dataService.obtener_usuario(1)).subscribe(
+    this.personasService.consultarDeudoresUsuarios(this.dataService.obtener_usuario(1), tipo_deuda).subscribe(
       (deudasUsuario: Deudores[]) => {
+        this.loadingService.hide();
+        this.mostrarGrid = true;
+
        this.Deudores_totales = deudasUsuario
         console.log('deudas', this.Deudores_totales);
         if(this.Deudores_totales.length==0){
@@ -114,6 +122,18 @@ export class MisDeudasComponent {
 
 
     return Math.max(0, diasRetraso); // Devuelve al menos cero si la fecha ya ha pasado
+  }
+
+  calcularTotal(retraso: number, periodicidad: number, monto: number, recargo: number): number {
+    let total = 0;
+    if(periodicidad!=0){
+      total = ((retraso / periodicidad) * monto) + ((retraso / periodicidad) * recargo);
+    }
+    else{
+      total = monto;
+
+    }
+    return isNaN(total) ? 0 : parseFloat(total.toFixed(2));
   }
 
   calcularProximoPago(proximoPago: string,periodicidad:number)

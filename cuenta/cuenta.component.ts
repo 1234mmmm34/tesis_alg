@@ -9,6 +9,7 @@ import { Personas } from '../modelos/personas';
 import Swal from 'sweetalert2';
 import { LoadingService } from '../loading-spinner/loading-spinner.service';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { EditarCuentaComponent } from '../editar-cuenta/editar-cuenta.component'
 
 
 
@@ -19,17 +20,13 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 }) 
 export class CuentaComponent {
 
-  menuItems = [ 
-    { title: 'Mi cuenta', subItems: ['Editar perfil', 'Restablecer contraseña'], icon: "account_circle", route:"EditarCuenta" },
-    { title: 'Mi comunidad', subItems: ['Crear grupo'], icon: "people", route:"Grupos"},
-    { title: 'Notificaciones', subItems: ['Configuración general'], icon: "notifications" },
-    { title: 'Acuerdos', subItems: ['Configuración general'], icon: "assignment" },
-    { title: 'Pagos', subItems: ['Configuración general', 'Pagos en línea'], icon: "payment" },
-    { title: 'Politicas y privacidad', icon: 'privacy_tip' },
-    // { title: 'Apariencia', icon: 'settings_system_daydream'},
- 
 
-  ];
+  
+  menuItems: any[] = [];
+
+
+
+
 
   activeIndex: number | null = null;  // Permitir que activeIndex pueda ser null
 
@@ -106,6 +103,8 @@ export class CuentaComponent {
   mostrarGrid = false;
   grupos = false;
 
+  mostrarPrincipal: boolean = false;
+
 
 
   constructor(private http: HttpClient, private dataService: DataService, private fb: FormBuilder, private imageService: ImageService, private loadingService: LoadingService) {
@@ -131,6 +130,33 @@ export class CuentaComponent {
 
   ngOnInit(): void {
 
+
+
+    if(this.dataService.obtener_usuario(7)=="usuario"){
+
+      this.menuItems = [
+         { title: 'Mi cuenta', subItems: ['Editar perfil', 'Restablecer contraseña'], icon: "account_circle", route:"EditarCuenta" }, 
+         { title: 'Politicas y privacidad', icon: 'privacy_tip' },
+         // { title: 'Apariencia', icon: 'settings_system_daydream'},
+      
+     
+       ];
+    } 
+    else{ 
+      this.menuItems = [ 
+     //    { path: '', route: 'EditarCuenta' },
+         { title: 'Mi cuenta', path: '', subItems: ['Editar perfil', 'Restablecer contraseña'], icon: "account_circle", route:"EditarCuenta" },
+         { title: 'Mi comunidad', subItems: ['Crear grupo'], icon: "people", route:"Grupos"},
+         { title: 'Notificaciones', subItems: ['Configuración general'], icon: "notifications" },
+         { title: 'Acuerdos', subItems: ['Configuración general'], icon: "assignment" },
+         { title: 'Pagos', subItems: ['Configuración general', 'Pagos en línea'], icon: "payment", route: "Paypal" },
+         { title: 'Politicas y privacidad', icon: 'privacy_tip' },
+         // { title: 'Apariencia', icon: 'settings_system_daydream'},
+      
+     
+       ];
+    }
+    
     this.darkModeActive = this.dataService.obtener_usuario(11);
 
 

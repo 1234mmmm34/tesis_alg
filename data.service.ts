@@ -95,6 +95,16 @@ export class DataService {
     //console.log("MES: ",month)
     return `${year}-${month}-${day}`;
 }
+
+mesActual(): string {
+  const mes = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  const today = new Date();
+  return mes[today.getMonth()];
+
+}
   
   // Función para asegurar que los números de mes y día tengan dos dígitos
   dosDigitos(n: number): string {
@@ -253,6 +263,9 @@ fetchDataDeudasExtra(id_tesorero: any, tipo_deuda: any): Observable<deudas[]> {
       }
       else if(op==12){
         return data.ip;
+      }
+      else if(op==13){
+        return data.hikvision;
       }
       /*
     else if(op==8){

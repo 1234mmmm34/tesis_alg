@@ -43,7 +43,7 @@ export class ConsultarNotificacionesComponent {
 
   ngOnInit(): void {
 
-    this.consultarNotificacion(this.dataService.obtener_usuario(1), this.id_destinatario);
+    this.consultarNotificacion(this.dataService.obtener_usuario(3), this.id_destinatario);
   }
 
   pageChanged(event: any) {
@@ -91,7 +91,7 @@ export class ConsultarNotificacionesComponent {
     this.id_destinatario = selectedValue;
     // console.log(this.id_destinatario);
 
-    this.consultarNotificacion(this.dataService.obtener_usuario(1), this.id_destinatario);
+    this.consultarNotificacion(this.dataService.obtener_usuario(3), this.id_destinatario);
   }
 
 
@@ -124,7 +124,7 @@ export class ConsultarNotificacionesComponent {
       formulario.destinatario = 0;
     }
 
-    this.NotificacionesService.agregarNotificacion(this.dataService.obtener_usuario(1), formulario.tipo, formulario.destinatario, formulario.asunto, formulario.mensaje)
+    this.NotificacionesService.agregarNotificacion(this.dataService.obtener_usuario(3), formulario.tipo, formulario.destinatario, formulario.asunto, formulario.mensaje)
       .subscribe(
         (respuesta: string) => {
           this.respuestaNotificacion = respuesta;
@@ -170,7 +170,7 @@ export class ConsultarNotificacionesComponent {
     });
 
 
-    this.dataService.fetchDataUsers(this.dataService.obtener_usuario(1)).subscribe((usuarios: usuarios[]) => {
+    this.dataService.fetchDataUsers(this.dataService.obtener_usuario(3)).subscribe((usuarios: usuarios[]) => {
       Swal.close();
       clearInterval(10);
       

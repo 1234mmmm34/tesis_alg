@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NotificacionesService } from '../consultar-notificaciones/notificaciones.service';
 import { Notificaciones } from '../modelos/notificaciones';
 import { DataService } from '../data.service';
+import { LoadingService } from '../loading-spinner/loading-spinner.service';
 
 @Component({
   selector: 'app-notificaciones-usuarios',
@@ -18,13 +19,14 @@ export class NotificacionesUsuariosComponent {
   cont: number = 1;
   notificaciones1: Notificaciones[] = [];
   filtroNotificaciones: "" | undefined;
-  id_destinatario: number = 0;
+  id_destinatario: number = this.dataService.obtener_usuario(1);
+  mostrarGrid: boolean = false;
   
-  constructor(private notificacionesService: NotificacionesService,private dataService:DataService) {}
+  constructor(private notificacionesService: NotificacionesService,private dataService:DataService, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.actualizarNotificaciones();
-    this.consultarNotificacion(this.idFraccionamiento, this.idUsuario);
+    this.consultarNotificacion(this.idFraccionamiento, this.dataService.obtener_usuario(1));
   }
 
  
@@ -55,22 +57,37 @@ export class NotificacionesUsuariosComponent {
       this.id_destinatario=selectedValue;
      // console.log(this.id_destinatario);
 
-     this.consultarNotificacion(this.dataService.obtener_usuario(1), this.id_destinatario);
+     this.consultarNotificacion(this.dataService.obtener_usuario(3), this.id_destinatario);
   }
   
 
   consultarNotificacion(idFraccionamiento: any, id_destinatario: number) {
-    this.notificacionesService.consultarNotificacion(idFraccionamiento, id_destinatario).subscribe((notificaciones: Notificaciones[]) => {
+    this.loadingService.show();
+
+    this.notificacionesService.consultarNotificacion(this.dataService.obtener_usuario(3), this.dataService.obtener_usuario(1)).subscribe((notificaciones: Notificaciones[]) => {
       //  console.log("notificaciones: ", valor);
         this.notificaciones = notificaciones;
         this.indice = 0;
         this.verdaderoRango = 6;
+        this.mostrarGrid = true;
+        this.loadingService.hide();
+
+
         this.notificaciones1 = this.notificaciones.slice(this.indice, this.indice + this.verdaderoRango);
 
       });
   }
 
-
+  pageChanged(event: any) {
+    // Determinar la acción del paginator
+    if (event.previousPageIndex < event.pageIndex) {
+      // Se avanzó a la siguiente página
+      this.paginador_adelante();
+    } else if (event.previousPageIndex > event.pageIndex) {
+      // Se retrocedió a la página anterior
+      this.paginador_atras();
+    }
+  }
 
 
   actualizarNotificaciones(): void {
@@ -81,7 +98,7 @@ export class NotificacionesUsuariosComponent {
     } else {
       // Asignar el ID de usuario correspondiente a la sesión (puedes ajustarlo según tu lógica de inicio de sesión)
       // this.idUsuario = ...;
-      this.idUsuario = this.dataService.obtener_usuario(1);
+      this.idUsuario = this.dataService.obtener_usuario(3);
     }
 
     this.notificacionesService.consultarNotificacionesPorId(this.idFraccionamiento, this.idUsuario)

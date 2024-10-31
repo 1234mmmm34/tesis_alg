@@ -3,7 +3,8 @@ body {
   background-image: url("../../assets/invitacion.png");
   display: flex;
   background-repeat: no-repeat;
-  background-size: cover;
+
+  background-size: auto;
 
 
 
@@ -13,7 +14,7 @@ body {
   height: 55px;
   width: 130px;
 
-} 
+}
 
 .derecha {
 
@@ -21,11 +22,12 @@ body {
   background: linear-gradient(169deg, rgba(31, 64, 116, 1) 0%, rgba(30, 56, 87, 1) 49%, rgba(24, 46, 74, 1) 100%);
   display: flex;
   flex-direction: column;
-  width: 23.5%;
+  width: 400px;
   height: 100%;
   position: absolute;
+  left: 600px;
   padding-top: 40px;
-  margin-left: 34%;
+  
   padding: 20px;
   color: rgb(255, 255, 255);
 
@@ -37,7 +39,7 @@ box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.2);
 
 .contenedor {
   padding-top: 20px;
-  margin-left: 49%;
+  margin-left: 19%;
 
 
 }
@@ -129,24 +131,47 @@ tr {
 }
 
 
+@media (max-width: 800px) {
+  .Formulario {
+    width: 300px; /* O ajusta según lo necesites */
+  }
+}
+
+@media (max-width: 1600px) {
+  .container {
+    justify-content: center; /* Centra el formulario en pantallas más pequeñas */
+  }
+
+  .Formulario {
+    width: 100%; /* Hace que el formulario ocupe todo el ancho */
+  }
+
+  .derecha {
+    display: none; /* Oculta la sección derecha si es necesario */
+  }
+
+
+}
 
 
 
 .Formulario {
 
-  
+
   display: flex;
   flex-direction: column;
-  margin-left: 90%;
-  margin-top: 30%;
-  margin-right: 24%;
+ 
+  margin-top: 50px;
+  right: 40px;
+ 
+  position: absolute;
   padding-left: 50px;
   height: 500px;
   background-color: #F2F3F4;
   border-radius: 2% 2% 2% 2%;
   width: 400px;
 
-  
+
 }
 
 .btn-register {

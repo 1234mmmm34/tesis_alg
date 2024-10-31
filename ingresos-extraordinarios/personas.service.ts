@@ -34,9 +34,9 @@ export class PersonasService {
     return this.http.get<Deudores[]>(url);
   }
 
-  consultarDeudoresUsuarios(idLote: number): Observable<Deudores[]> {
+  consultarDeudoresUsuarios(idLote: number, estado: number): Observable<Deudores[]> {
     
-    const url = `${this.apiUrl}/Deudas/Consultar_DeudoresUsuario?id_lote=${idLote}`;
+    const url = `${this.apiUrl}/Deudas/Consultar_DeudoresUsuario?id_deudor=${idLote}&estado=${estado}`;
     return this.http.get<Deudores[]>(url);
   }
 
