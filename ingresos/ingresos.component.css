@@ -43,10 +43,11 @@ body {
 
   height: 70%;
   padding: 20px;
-  margin-top: 100px;
+  margin-top: 50px;
   position: absolute;
   top: 20px;
   left: 15%;
+
 
 
 
@@ -78,7 +79,7 @@ input {
 
 .contenedor2 {
   height: 600px;
-  width: 50%;
+  width: 80%;
 
   overflow: hidden;
   /*margin-left: 15%;*/
@@ -104,11 +105,17 @@ input {
 
    
   padding-top: 10px;
-  margin-left: 150%;
+  margin-left: 1%;
   margin-right: 3%;
 
 
 
+}
+
+#botones{
+  margin-left: 140%;
+  width: 300px;
+  padding-right: 40px;
 }
 
 .boton-agregar {
@@ -143,6 +150,17 @@ input {
 }
 
 
+#sum-button{
+ /* background-color: #ffffff;
+  border: #ffffff;*/
+  width: 100px;
+  height: 50px;
+  size:40px;
+ 
+  
+}
+
+
 
 
 
@@ -163,7 +181,7 @@ input {
   background-color: #ffffff;
 
   width: 140%;
-  height: 10%;
+  height: 12%;
 
   border-collapse: collapse;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -238,7 +256,7 @@ select {
 table {
   background-color: #ffffff;
   position: absolute;
-  top: 350px;
+  top: 260px;
   width: 70%;
   font: 1em sans-serif;
   margin: auto;

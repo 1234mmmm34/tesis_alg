@@ -36,9 +36,9 @@ export class AgregarUsuarioComponent {
   cont: number = 1;
   ngOnInit(): void {
 
-    this.fetchDataUsers(this.dataService.obtener_usuario(1));
+    this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
-
+ 
     $(function () {
 
       // Active the first thumb & panel
@@ -193,8 +193,8 @@ export class AgregarUsuarioComponent {
           fecha_nacimiento: usuario.fecha_nacimiento,
           correo: "N/A",
           contrasenia: "123",
-          id_fraccionamiento: this.dataService.obtener_usuario(1),
-          id_administrador: this.dataService.obtener_usuario(1),
+          id_fraccionamiento: this.dataService.obtener_usuario(3),
+          id_administrador: this.dataService.obtener_usuario(3),
           id_lote: 1,
           hikvision: "permitido"
 
@@ -211,7 +211,7 @@ export class AgregarUsuarioComponent {
           .subscribe((res) => {
             console.log(res);
             console.log(this.usuarios[0].fecha_nacimiento);
-            this.fetchDataUsers(this.dataService.obtener_usuario(1));
+            this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
 
           });
@@ -240,7 +240,7 @@ export class AgregarUsuarioComponent {
             confirmButtonText: 'Aceptar'
           })
           this.UserGroup.reset();
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
         },
         (error) => {
@@ -251,7 +251,7 @@ export class AgregarUsuarioComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
           console.log("hola");
           this.UserGroup.reset();
 
@@ -288,7 +288,7 @@ export class AgregarUsuarioComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
           console.log("hola");
           this.UserGroup.reset();
 
@@ -312,7 +312,7 @@ export class AgregarUsuarioComponent {
             icon: 'success',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
 
         },
         (error) => {
@@ -323,7 +323,7 @@ export class AgregarUsuarioComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
           console.log("hola");
           this.UserGroup.reset();
 
@@ -440,7 +440,7 @@ export class AgregarUsuarioComponent {
             icon: 'success',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
           window.location.reload();
 
         },
@@ -452,7 +452,7 @@ export class AgregarUsuarioComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           })
-          this.fetchDataUsers(this.dataService.obtener_usuario(1));
+          this.fetchDataUsers(this.dataService.obtener_usuario(3));
           console.log("hola");
           this.UserGroup.reset();
 

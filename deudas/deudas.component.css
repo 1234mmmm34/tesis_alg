@@ -275,6 +275,16 @@ mat-paginator{
     
   }
 
+  #sum-button{
+    /* background-color: #ffffff;
+     border: #ffffff;*/
+     width: 100px;
+     height: 50px;
+     size:40px;
+    
+     
+   }
+
 
 /*    MODAL   */
 

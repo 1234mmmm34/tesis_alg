@@ -11,7 +11,16 @@
 
     <form id="buscar">
       <input type="text" id="tbuscar" class="form-control" name="filtrar" placeholder="buscar">
-      <label for="modal" class="boton">Agregar</label>
+      
+      <div id="botones">
+        <button id="sum-button">
+          <mat-icon style="font-weight: bolder;">assessment</mat-icon>
+        </button>
+
+
+        <label for="modal" class="boton">Agregar</label>
+      </div>
+
     </form>
 
     <div class="contenedor2" *ngIf="this.egresos.length>0; else noencontrado">

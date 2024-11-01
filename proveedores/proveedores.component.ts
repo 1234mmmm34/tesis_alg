@@ -29,7 +29,7 @@ export class ProveedoresComponent {
     const nombre = formulario.nombre;
     const apellidoPaterno = formulario.apellido_Paterno;
     const apellidoMaterno = formulario.apellido_Paterno;
-    const telefono = formulario.telefono;
+    const telefono = formulario.telefono; 
     const tipo = formulario.tipo;
     const direccion = formulario.direccion;
     const funcion = formulario.funcion;
@@ -182,7 +182,7 @@ export class ProveedoresComponent {
 
     this.id_proveedor=proveedorSeleccionado.id_proveedor;
   }
-
+ 
   limpiarCampos(){
     this.proveedorModel = {
       idFraccionamiento: String(this.dataservice.obtener_usuario(3)),

@@ -13,7 +13,7 @@
     <p id="descripcion">Agrega tus entradas de dinero y administra tus finanzas. </p>
   </div>
 
- 
+
 
 
 
@@ -30,81 +30,85 @@
       <span *ngIf="showHelp" class="help-message">Las deudas ordinarias consisten en todas aquellas que tienen que ser
         liquidas periodicamente; si son deudas extraordinarias, hablamos de deudas de pago único.</span>
 
+      <div id="botones">
+        <button id="sum-button">
+          <mat-icon style="font-weight: bolder;">assessment</mat-icon>
+        </button>
 
-      <label for="modal" class="boton" (click)="limpiar()">Agregar</label>
 
-
+        <label for="modal" class="boton" (click)="limpiar()">Agregar</label>
+      </div>
 
     </div>
   </div>
 
-    <div id="contenedor2" *ngIf="this.historial1.length>0; else noencontrado">
-      <table id="example" class="table" cellspacing="0">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Deudor</th>
-            <th>Tipo de deuda</th>
-            <th class="fecha">Descripción</th>
-            <th>Monto</th>
-            <th>Recargo aplicado</th>
-            <th>Estado</th>
-            <th>Fecha</th>
-            <th>Comprobante</th>
-            <th>Generar recibo</th>
-            <th style="text-align:center;width:200px;">
-              Borrar
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr mat-row matRowDef="columns: displayedcolumns;" *ngFor="let hist of historial1; let j=index"
-            (click)="onRowClicked(deuda)">
-            <th scope="row">{{hist.id_deuda}}</th>
-            <td>{{hist.nombre_persona}}</td>
-            <td>{{hist.tipo_deuda}}</td>
-            <td class="fecha">{{hist.nombre_deuda}}</td>
-            <td>${{hist.monto}} MXN</td>
-            <td>${{hist.recargo}} MXN</td>
-            <td *ngIf="hist.estado=='pagado'" style="color: green">
-              {{ hist.estado }}
-            </td>
-            <td *ngIf="hist.estado=='abono'" style="color: rgb(69, 64, 10)">
-              {{ hist.estado }}
-            </td>
-            <td>{{hist.dia_registro}}</td>
-            <td>
-              <a href="{{hist.comprobante}}" style="text-decoration: none;" target="_blank">
+  <div id="contenedor2" *ngIf="this.historial1.length>0; else noencontrado">
+    <table id="example" class="table" cellspacing="0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Deudor</th>
+          <th>Tipo de deuda</th>
+          <th class="fecha">Descripción</th>
+          <th>Monto</th>
+          <th>Recargo aplicado</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Comprobante</th>
+          <th>Generar recibo</th>
+          <th style="text-align:center;width:200px;">
+            Borrar
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mat-row matRowDef="columns: displayedcolumns;" *ngFor="let hist of historial1; let j=index"
+          (click)="onRowClicked(deuda)">
+          <th scope="row">{{hist.id_deuda}}</th>
+          <td>{{hist.nombre_persona}}</td>
+          <td>{{hist.tipo_deuda}}</td>
+          <td class="fecha">{{hist.nombre_deuda}}</td>
+          <td>${{hist.monto}} MXN</td>
+          <td>${{hist.recargo}} MXN</td>
+          <td *ngIf="hist.estado=='pagado'" style="color: green">
+            {{ hist.estado }}
+          </td>
+          <td *ngIf="hist.estado=='abono'" style="color: rgb(69, 64, 10)">
+            {{ hist.estado }}
+          </td>
+          <td>{{hist.dia_registro}}</td>
+          <td>
+            <a href="{{hist.comprobante}}" style="text-decoration: none;" target="_blank">
               <button type="button" id="view-button">
                 <mat-icon style="font-size:large; font-weight: bolder;text-decoration: none;">file_open</mat-icon>
               </button>
-              </a>
-            </td>
-            <td>
-              <a style="text-decoration: none;" target="_blank">
+            </a>
+          </td>
+          <td>
+            <a style="text-decoration: none;" target="_blank">
               <button type="button" id="view-button" (click)="Generar_Recibo(hist.id)">
                 <mat-icon style="font-size:large; font-weight: bolder;text-decoration: none;">file_open</mat-icon>
               </button>
-              </a>
-            </td>
-            <td>
+            </a>
+          </td>
+          <td>
 
-              <button type="button" id="view-button">
-                <mat-icon style="font-size:large; font-weight: bolder;">close</mat-icon>
-              </button>
-            </td>
-          </tr>
+            <button type="button" id="view-button">
+              <mat-icon style="font-size:large; font-weight: bolder;">close</mat-icon>
+            </button>
+          </td>
+        </tr>
 
-        </tbody>
-      </table>
+      </tbody>
+    </table>
 
 
-      <div class="pages">
-        <mat-paginator [length]="historial.length" [pageSize]="verdaderoRango" [pageSizeOptions]="[5, 10, 25, 100]"
-          aria-label="Select page" (page)="pageChanged($event)">
-        </mat-paginator>
-      </div>
+    <div class="pages">
+      <mat-paginator [length]="historial.length" [pageSize]="verdaderoRango" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page" (page)="pageChanged($event)">
+      </mat-paginator>
     </div>
+  </div>
 
 
 
@@ -162,21 +166,23 @@
 
 
             <p>
-              <select id="usuarioExtra" name="usuarioExtra" required formControlName="usuarioExtra" (change)="onChangeUsuario($event)">
+              <select id="usuarioExtra" name="usuarioExtra" required formControlName="usuarioExtra"
+                (change)="onChangeUsuario($event)">
                 <option value='null' disabled selected>-- Selecciona un usuario --</option>
                 <option *ngFor="let usuario of personas" [value]="usuario.id_persona">
                   {{ usuario.nombre }} {{ usuario.apellido_pat }} {{ usuario.apellido_mat }}
                 </option>
               </select>
             </p>
-            
+
 
 
             <p>
-              <select #deudaExtra id="deudaExtra" name="deudaExtra" formControlName="deudaExtra" required ngModel (change)="onChangeDeuda($event)">
+              <select #deudaExtra id="deudaExtra" name="deudaExtra" formControlName="deudaExtra" required ngModel
+                (change)="onChangeDeuda($event)">
                 <option value='null' hidden selected>-- Selecciona una deuda --</option>
                 <option *ngFor="let deuda of deudasDelUsuario" value="{{deuda.id_deuda}}">
-                   {{deuda.nombre_deuda}}
+                  {{deuda.nombre_deuda}}
                 </option>
               </select>
             </p>
@@ -209,10 +215,12 @@
 
             <p>
               <input type="file" (change)="handleInputFile($event)" accept=".pdf" id="fileInput" style="display: none;">
-              <button class="boton-verde" onclick="document.getElementById('fileInput').click()">Cargar Comprobante</button>
+              <button class="boton-verde" onclick="document.getElementById('fileInput').click()">Cargar
+                Comprobante</button>
             </p>
             <p>
-              <span *ngIf="archivoSeleccionado">{{ archivoSeleccionado?.name }}</span> <!-- Solo el nombre del archivo -->
+              <span *ngIf="archivoSeleccionado">{{ archivoSeleccionado?.name }}</span>
+              <!-- Solo el nombre del archivo -->
             </p>
             <!--btn_imagen-->
             <p>
@@ -220,7 +228,7 @@
             </p>
           </form>
 
-        
+
 
         </div>
 

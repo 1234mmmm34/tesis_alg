@@ -14,7 +14,17 @@
 
   <form id="buscar">
     <input type="text" id="tbuscar" class="form-control" name="filtrar" placeholder="buscar">
-    <label for="modal" class="boton">Agregar</label>
+
+    
+    <div id="botones">
+      <button id="sum-button">
+        <mat-icon style="font-weight: bolder;">assessment</mat-icon>
+      </button>
+      
+      <label for="modal" class="boton" (click)="limpiarCampos()">Agregar</label>
+
+
+    </div>
 
   </form>
 
@@ -103,10 +113,6 @@
 
       <div class="form" > 
         <form  id="formCrear" class="Formulario" #proveedorForm="ngForm" (ngSubmit)="agregarProveedor(proveedorModel)">
-
-          <p>
-            <input type="number" placeholder="" id="idFraccionamiento" name="idFraccionamiento" [(ngModel)]="proveedorModel.idFraccionamiento" required disabled>
-          </p>
           <p>
             <input type="text" placeholder="Nombre del proveedor (o representante)" id="nombre" name="nombre" [(ngModel)]="proveedorModel.nombre" required>
           </p>
@@ -143,6 +149,4 @@
       </div>
     </div>
 </body>
-
-
 
